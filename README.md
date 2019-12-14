@@ -269,4 +269,20 @@ Task 11. Install kubernetes dashboard and expose the service to nodeport
   
 Task 12. figure out how to generate token to login to the dashboard
 
-  
+   # Create service account
+   
+   kubectl create serviceaccount cluster-admin-dashboard-sa
+   
+   # Bind ClusterAdmin role to the service account
+   
+   kubectl create clusterrolebinding cluster-admin-dashboard-sa   --clusterrole=cluster-admin   --serviceaccount=default:cluster-admin-dashboard-sa
+   
+   # Parse the token
+   
+   TOKEN=$(kubectl describe secret $(kubectl -n kube-system get secret | awk '/^cluster-admin-dashboard-sa-token-/{print $1}') | awk '$1=="token:"{print $2}')
+   
+   echo $TOKEN
+   
+   result is:
+   
+   eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImNsdXN0ZXItYWRtaW4tZGFzaGJvYXJkLXNhLXRva2VuLWRuMjcyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImNsdXN0ZXItYWRtaW4tZGFzaGJvYXJkLXNhIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYzAxNjZmMTQtMWU5OS0xMWVhLTliZTctMDI1MDAwMDAwMDAxIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6Y2x1c3Rlci1hZG1pbi1kYXNoYm9hcmQtc2EifQ.Fz72a8HAPkqpZofTy5w1IXY_EIUH_u-lPtE6uYFyeYHzbLbTTsPXCe9wcMC53pefBLBO0hJBIvWKEGpY_iw-wupeaHe7bwLd8TrGcJ4JNA2yUM4P16r515S1034xnCyBomvsLBS1NjmryI_1oqpb8chI2lePq7-UPL943aePBq7GMtmKY3oaXL5cVbEyA39qACkoMWzNpmgTsiu0SwFLZd_v7xOoTzhf1e_JcF-IJ4lL20s65xD5-2f1mKyK6SFSabBMff92PVCZfv7tjSjYxw9uU-mx3IIxfm7_8ypEGB_hjA7-D0d7v_0Jsm68Y9cXEHVOhdmFQr76ftKPB7meIQ eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImRlZmF1bHQtdG9rZW4tdnI4cXYiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVmYXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjdmOWZkNDQzLTFlMzYtMTFlYS05YmU3LTAyNTAwMDAwMDAwMSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmRlZmF1bHQifQ.eWbhTXOC6XeJiLyKbqAyp9JOtnINQDJ6glNv5p8Xef3lq36AtkZEYRQ6pyPgCo5p2gxJ1AgCdQeXcsq6LNO-23LUSXXPqTQikMC4ktTOKLETKocOapJJ-2qKr2JTPMfEmWzt1JV9Hj-lGHzyoH_aLxAicZ5E_WYKy-Cl-dUwNX578S8XpwQp6EViQ_iWiwpuRIHVrbGOBN_cciFz9t4ngf6u-OG8qM9qsml4LkdSmOn-aSuCl2Cq6FkF3zMPnPLQYpJ7VBM-PZTt5NFwYUqN2SJYaP13oh5bFOOSYEQIHc5e3RCrSBCWYYG4w9Bc4I12vnHKhO2Hoo2K3gwqR60y_A
