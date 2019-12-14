@@ -250,5 +250,23 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
       curl http://localhost:31080
       
       Go Web Hello World!
+      
 Task 11. Install kubernetes dashboard and expose the service to nodeport
+  
+  Folowing this flow, and tried to create the correct config file to access kubernetes dashboard.
+  
+  kubectl config --kubeconfig=config-demo set-cluster development --server=https://localhost:8080 --certificate-authority=fake-ca-file
+  
+  kubectl config --kubeconfig=config-demo set-cluster scratch --server=https://localhost:8083 --insecure-skip-tls-verify
+  
+  kubectl config --kubeconfig=config-demo set-credentials developer --client-certificate=fake-cert-file --client-key=fake-key-seefile
+  
+  kubectl config --kubeconfig=config-demo set-credentials experimenter --username=exp --password=some-password
+  
+  kubectl config --kubeconfig=config-demo view
+  
+  For this task, I didn't obtained the desired result
+  
+Task 12. figure out how to generate token to login to the dashboard
 
+  
