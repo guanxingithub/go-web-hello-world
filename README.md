@@ -14,6 +14,7 @@ Task 2. install gitlab-ce version in the host https://about.gitlab.com/install/#
     sudo EXTERNAL_URL="https://" apt-get install gitlab-ce
 
 Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, use golang to build a helo world web app(listen to 8081 port) and check-in the code to mainline.
+   
    step 1: install golang by 
        sudo snap install go
        sudo apt install golang-go
@@ -92,8 +93,8 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
        I could find:
        REPOSITORY            TAG        IMAGE ID
        go-web-hello-world   latest      58df83d0ba3c  
-       Step 4. run the app:
        
+       Step 4. run the app:
        sudo docker run go-web-hello-world:latest &
        curl http://localhost:8081
        output is:
@@ -106,10 +107,14 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
        Go Web Hello World!
  
  Task 7. tag the docker image using gxdockerhub/go-web-hello-world:v0.1 and push it to docker hub
+       
        step 1: create my docker called gxdockerhub
+       
        Step 2: create the repository called go-web-hello-world and add the description
+       
        Step 3: push the tag of the image into depository
           sudo docker push gxdockerhub/go-web-hello-world:v0.1
+       
        Step 4: go to my docker hub, and find this tage
        
  Task 8.  create a README.md file and add the above technical procedures into this file.
