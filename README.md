@@ -162,3 +162,91 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
        
  Task 8.  create a README.md file and add the above technical procedures into this file.
 
+ Task 9. Install the kubernetes cluster by using kubeadm
+       
+         # install package
+         
+         sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+         
+         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+         
+         cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+         
+         deb https://apt.kubernetes.io/ kubernetes-xenial main
+         
+         EOF
+         
+         sudo apt-get update
+         
+         sudo apt-get install -y kubelet kubeadm kubectl
+
+         sudo apt-mark hold kubelet kubeadm kubectl
+
+         # install kubernetes
+         
+         sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+
+         mkdir -p $HOME/.kube
+
+         sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+         sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+         # install network
+         
+         kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+      Or download docker with kubernetes directly.
+      
+      Now, under $HOME/.kube, we have config file. I push it under this repository.
+  
+  Task 10. deploy the hello world container into the kubernetes above and expose the service to nodePort 31080
+  
+      kubectl run go-web-hello-world --image=gxdockerhub/go-web-hello-world:v0.1 --replicas=1
+      
+      kubectl get all
+
+      kubectl get deployment
+      
+      kubectl get pod
+
+      kubectl expose deployment go-web-hello-world --type=NodePort --port=8081
+
+      kubectl edit service go-web-hello-world
+       
+      to modify yaml file on nodePort to 31080
+      
+      And then run:
+      
+      kubectl get all 
+      
+      curl http://localhost:31080
+      
+      The output is:
+      
+      NAME                                      READY   STATUS    RESTARTS   AGE
+      
+      pod/go-web-hello-world-58744c768c-slfng   1/1     Running   0          10h
+      
+      pod/go-web-helloworld-b5579cc75-pnmth     1/1     Running   0          6h11m
+
+      NAME                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+      
+      service/go-web-hello-world   NodePort    10.107.13.216   <none>        8081:31080/TCP   3m57s
+      
+      service/kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          10h
+
+      NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+      
+      deployment.apps/go-web-hello-world   1/1     1            1           10h
+      
+      deployment.apps/go-web-helloworld    1/1     1            1           6h11m
+
+      NAME                                            DESIRED   CURRENT   READY   AGE
+      
+      replicaset.apps/go-web-hello-world-58744c768c   1         1         1       10h
+      
+      replicaset.apps/go-web-helloworld-b5579cc75     1         1         1       6h11m
+
+      curl http://localhost:31080
+      
+      Go Web Hello World!
