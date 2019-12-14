@@ -1,0 +1,31 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2019-12-14T16:34:11Z"
+  labels:
+    run: go-web-hello-world
+  name: go-web-hello-world
+  namespace: default
+  resourceVersion: "45898"
+  selfLink: /api/v1/namespaces/default/services/go-web-hello-world
+  uid: 8ea7e647-1e8f-11ea-9be7-025000000001
+spec:
+  clusterIP: 10.107.13.216
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31080
+    port: 8081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    run: go-web-hello-world
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer:
+    ingress:
+    - hostname: localhost
