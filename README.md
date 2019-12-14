@@ -253,6 +253,14 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
       
 Task 11. Install kubernetes dashboard and expose the service to nodeport
   
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta6/aio/deploy/recommended.yaml
+
+  kubectl proxy
+
+  http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+  
+  to access kubernetes dashboard.
+  
   Folowing this flow, and tried to create the correct config file to access kubernetes dashboard.
   
   kubectl config --kubeconfig=config-demo set-cluster development --server=https://localhost:8080 --certificate-authority=fake-ca-file
