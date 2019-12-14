@@ -1,19 +1,23 @@
 # go-web-hello-world
 I worked on this project at home. 
 So, first of all, I need to download the Oracle VM VirtualBox as well as ubuntu-18.04.3-live-server-amd64.iso
+
 After obtained a VM from VirtualBox, I could finish the following tasks:
 
 Task 1. login and updates the system to the latest
     sudo apt-get update
+
 Task 2. install gitlab-ce version in the host https://about.gitlab.com/install/#ubuntu?version=ce, by following the following instructions:
     sudo apt-get install -y curl openssh-server ca-certificates
     sudo apt-get install -y postfix
     curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
     sudo EXTERNAL_URL="https://" apt-get install gitlab-ce
+
 Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, use golang to build a helo world web app(listen to 8081 port) and check-in the code to mainline.
    step 1: install golang by 
        sudo snap install go
        sudo apt install golang-go
+       
    step 2: create group/project and write a go code to build a hello world web app
        under my home directory, 
        mkdir demo; cd demo; mkdir go-web-hello-world; cd go-web-hello-world;
@@ -29,17 +33,20 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
                http.HandleFunc("/", hello_world)
                http.ListenAndServe(":8081", nil)
        }
+       
    Step 3: test the code
        sudo go run hello-world.go 
        after input the password, the app is running, and from other terminal, run
        curl http://localhost:8081
        will get the following output:
        Go Web Hello World!
+       
    Step 4: use git to create a new local repository under demo/go-web-hello-world
         git init
         And then 
         git add hello-world.go
         git commit -m"First Version of the hello-world"
+ 
  Task 4. build the app and expost the services to 8081 port, this was finished in Step 2 of the above task 3.
  
  Task 5. install docker by folowing the following steps:
@@ -97,7 +104,8 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
        curl http://localhost:8082
        output is:
        Go Web Hello World!
-  Task 7. tag the docker image using gxdockerhub/go-web-hello-world:v0.1 and push it to docker hub
+ 
+ Task 7. tag the docker image using gxdockerhub/go-web-hello-world:v0.1 and push it to docker hub
        step 1: create my docker called gxdockerhub
        Step 2: create the repository called go-web-hello-world and add the description
        Step 3: push the tag of the image into depository
