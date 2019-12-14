@@ -250,3 +250,5 @@ Task 3. create a demo group/project in gitlab, named demo/go-web-hello-world, us
       curl http://localhost:31080
       
       Go Web Hello World!
+Task 11. Install kubernetes dashboard and expose the service to nodeport
+
